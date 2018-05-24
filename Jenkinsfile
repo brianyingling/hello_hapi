@@ -22,5 +22,12 @@ pipeline {
                 sh 'npm test'
             }
         }
+        stage('Publish') {
+            steps {
+                withDockerRegistry([credentialsId: "", url: ""]) {
+                    sh "docker push brianyingling/orsty:latest"
+                }
+            }
+        }
     }
 }
