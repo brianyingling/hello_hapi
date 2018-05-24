@@ -23,12 +23,10 @@ pipeline {
             }
         }
         stage('Publish') {
-            steps {
-                script {
-                    def image = docker.build("brianyingling/hello_hapi:${env.BUILD_ID}")
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                        image.push('latest')
-                    }
+            node {
+                def image = docker.build("brianyingling/hello_hapi:${env.BUILD_ID}")
+                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                    image.push('latest')
                 }
             }
         }
