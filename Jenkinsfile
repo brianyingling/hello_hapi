@@ -22,11 +22,15 @@ pipeline {
                 sh 'npm test'
             }
         }
-    }
-    node {
-        def image = docker.build("brianyingling/hello_hapi:${env.BUILD_ID}")
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            image.push('latest')
+        stage('Publish') {
+            steps {
+                script {
+                    def image = docker.build("brianyingling/hello_hapi:${env.BUILD_ID}")
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        image.push('latest')
+                    }
+                }
+            }
         }
     }
 }
