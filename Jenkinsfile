@@ -31,7 +31,8 @@ pipeline {
         stage('Publish') {
             steps {
                 withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    sh "docker push brianyingling/orsty:latest"
+                    def image = docker.build("hello_hapi:${env.BUILD_ID}")
+                    image.push()
                 }
             }
         }
