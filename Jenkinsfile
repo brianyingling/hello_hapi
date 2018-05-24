@@ -29,11 +29,9 @@ pipeline {
             }
         }
         stage('Publish') {
-            steps {
-                docker.withRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    def image = docker.build("hello_hapi:${env.BUILD_ID}")
-                    image.push()
-                }
+            docker.withRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
+                def image = docker.build("hello_hapi:${env.BUILD_ID}")
+                image.push()
             }
         }
     }
