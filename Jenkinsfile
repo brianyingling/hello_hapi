@@ -1,36 +1,53 @@
 #!/usr/bin/env groovy
-
-pipeline {
-
-    agent {
-        docker {
-            image 'node'
-            args '-u root'
-        }
-    }
-
-    stages {
+node {
+    checkout scm
+    def image = docker.build("brianyingling/hello_hapi:${env.BUILD_ID}")
+    image.inside {
         stage('Build') {
-            steps {
-                echo 'Building...'
-                sh 'npm install'
-            }
+            echo 'Building...'
+            sh 'npm install'
         }
         stage('Test') {
-            steps {
-                echo 'Testing...'
-                sh 'npm test'
-            }
-        }
-        stage('Publish') {
-            steps {
-                script {
-                    def image = docker.build("brianyingling/hello_hapi:${env.BUILD_ID}")
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                        image.push('latest')
-                    }
-                }
-            }
+            echo 'Testing...'
+            sh 'npm test'
         }
     }
+     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+        image.push('latest')
+    }
 }
+
+// pipeline {
+
+//     agent {
+//         docker {
+//             image 'node'
+//             args '-u root'
+//         }
+//     }
+
+//     stages {
+//         stage('Build') {
+//             steps {
+//                 echo 'Building...'
+//                 sh 'npm install'
+//             }
+//         }
+//         stage('Test') {
+//             steps {
+//                 echo 'Testing...'
+//                 sh 'npm test'
+//             }
+//         }
+//         stage('Publish') {
+//             steps {
+//                 script {
+//                     def image = docker.build("brianyingling/hello_hapi:${env.BUILD_ID}")
+//                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+//                         image.push('latest')
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
