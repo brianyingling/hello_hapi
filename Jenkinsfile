@@ -10,12 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Pre') {
-            steps {
-                sh 'node --version'
-                sh 'docker --version'
-            }
-        }
         stage('Build') {
             steps {
                 echo 'Building...'
