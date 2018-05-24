@@ -10,6 +10,12 @@ pipeline {
     }
 
     stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+                sh 'docker --version'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building...'
