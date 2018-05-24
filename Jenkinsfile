@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                withDockerRegistry([credentialsId: "", url: ""]) {
+                withDockerRegistry('docker-hub-credentials') {
                     sh "docker push brianyingling/orsty:latest"
                 }
             }
