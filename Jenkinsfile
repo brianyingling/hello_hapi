@@ -13,7 +13,10 @@ node {
         }
     }
      docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-        image.push('latest')
+        stage('Publish') {
+            echo 'Publishing...'
+            image.push('latest')
+        }
     }
 }
 
