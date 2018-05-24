@@ -25,8 +25,8 @@ pipeline {
         stage('Publish') {
             steps {
                 script {
+                    def image = docker.build("hello_hapi:${env.BUILD_ID}")
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                        def image = docker.build("hello_hapi:${env.BUILD_ID}")
                         image.push('latest')
                     }
                 }
