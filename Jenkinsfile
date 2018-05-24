@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
+                docker.withRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
                     def image = docker.build("hello_hapi:${env.BUILD_ID}")
                     image.push()
                 }
