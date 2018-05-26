@@ -15,6 +15,13 @@ Server.route({
     }
 });
 
+Server.route({
+    method: 'GET',
+    path: '/',
+    handler: function(req, res) {
+        res("HOME PAGE!");
+    }
+});
 // don't start server if this file was required
 
 if (!module.parent) {
