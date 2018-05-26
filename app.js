@@ -20,7 +20,7 @@ Server.route({
     path: '/',
     handler: function (req, res) {
 
-        res('HOME PAGE!');
+        res('THE HOME PAGE!');
     }
 });
 // don't start server if this file was required
