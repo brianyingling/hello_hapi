@@ -15,7 +15,7 @@ node {
      docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
         stage('Publish') {
             echo 'Publishing...'
-            image.push('latest')
+            image.push("${env.BUILD_ID}")
         }
     }
 }
